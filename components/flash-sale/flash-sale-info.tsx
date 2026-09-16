@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { apiClient } from "@/lib/axios";
-import { Loader2, CalendarIcon, DeliveryBoxIcon, DiscountTagIcon } from "lucide-react";
+import { Loader2, CalendarIcon, Package, Tag } from "lucide-react";
 
 interface FlashSaleDetail {
   id: number;
@@ -79,7 +79,7 @@ export default function FlashSaleInfo() {
               {sale.image ? (
                 <Image src={sale.image} alt={sale.title} width={92} height={92} className="object-cover w-full h-full" unoptimized />
               ) : (
-                <DiscountTagIcon className="size-8 text-gray-300" />
+                <Tag className="size-8 text-gray-300" />
               )}
             </div>
             <div className="space-y-1">
@@ -114,7 +114,7 @@ export default function FlashSaleInfo() {
         <div className="grid grid-cols-1 sm:grid-cols-2 bg-gray-100 p-6 rounded-2xl gap-6">
           <div className="flex items-center gap-3">
             <div className="size-10 rounded-full bg-warning-lighter flex items-center justify-center shrink-0">
-              <DeliveryBoxIcon className="size-6 text-warning-dark" />
+              <Package className="size-6 text-warning-dark" />
             </div>
             <div>
               <p className="text-xs leading-4.5 text-light-secondary-text">Total Products in Sale</p>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -10,7 +10,7 @@ import { apiClient } from "@/lib/axios";
 import { handleApiError } from "@/lib/apiHelper";
 import { Logo } from "@/components/ui/logo";
 
-export function ForgotPasswordOTPForm() {
+function ForgotPasswordOTPFormContent() {
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const [loading, setLoading] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -161,5 +161,19 @@ export function ForgotPasswordOTPForm() {
         </Link>
       </p>
     </div>
+  );
+}
+
+export function ForgotPasswordOTPForm() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center py-12">
+          <span className="h-6 w-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      }
+    >
+      <ForgotPasswordOTPFormContent />
+    </Suspense>
   );
 }

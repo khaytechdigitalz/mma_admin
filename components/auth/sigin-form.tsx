@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -15,7 +15,7 @@ import { handleApiError } from "@/lib/apiHelper";
 import { TwoFaForm } from "@/components/auth/sigin-2fa-form";
 import { Logo } from "@/components/ui/logo";
 
-export function SigninForm() {
+function SigninFormContent() {
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("from") || "/";
   const [email, setEmail] = useState("");
@@ -74,11 +74,7 @@ export function SigninForm() {
           secure: true,
           sameSite: "lax",
         });
-        // Derive the sidebar role from the account the backend actually
-        // returned, rather than hardcoding everyone to "master" - a seller/
-        // staff account logging in here should see the restricted nav, not
-        // the full admin sidebar. Adjust this mapping if your backend uses
-        // different type values.
+
         const role: "master" | "seller" = user?.type === "seller" ? "seller" : "master";
         localStorage.setItem("auth_token", token);
         localStorage.setItem("user_info", JSON.stringify(user));
@@ -197,5 +193,19 @@ export function SigninForm() {
         </Button>
       </form>
     </div>
+  );
+}
+
+export function SigninForm() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center py-12">
+          <span className="h-6 w-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      }
+    >
+      <SigninFormContent />
+    </Suspense>
   );
 }
