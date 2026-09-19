@@ -146,14 +146,13 @@ export default function SellerDetails() {
       {/* Top Bar Header */}
       <div className="flex items-center justify-between bg-white rounded-2xl p-4 sm:p-6 border border-gray-100 shadow-sm">
         <PageHeader title="Seller Profile" backHref="/sellers" className="gap-4" />
-        <Button href={`/sellers/edit-seller?id=${seller.id}`} variant="outline" size="sm">
-          Edit Profile
-        </Button>
+        
       </div>
 
       {/* Hero Card with Opaque Background Banner */}
       <div className="relative rounded-2xl border border-gray-100 overflow-hidden shadow-sm bg-white">
         {/* Background Banner Container */}
+        {/*
         <div className="absolute inset-0 z-0">
           {seller.storefront?.banner ? (
             <Image
@@ -168,6 +167,7 @@ export default function SellerDetails() {
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-white via-white/85 to-transparent" />
         </div>
+        */}
 
         {/* Content Layer */}
         <div className="relative z-10 p-4 sm:p-6 space-y-6">

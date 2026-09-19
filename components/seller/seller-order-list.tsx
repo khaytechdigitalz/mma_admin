@@ -7,9 +7,14 @@ import { PaginatedResponse } from "@/types/seller";
 interface OrderItem {
   id: number;
   order_no: string;
+  sub_order_no: string;
   user: {
     name: string;
     email: string;
+  } | null;
+  master_order: {
+    payment_status: string;
+    payment_method: string;
   } | null;
   customer_name: string;
   total_amount: string | number;
@@ -84,18 +89,18 @@ export default function SellerOrderList({ sellerId }: { sellerId: string }) {
           <tbody className="divide-y divide-gray-200">
             {orders.map((order) => (
               <tr key={order.id} className="hover:bg-gray-50">
-                <td className="p-3 font-medium text-gray-900">#{order.order_no}</td>
+                <td className="p-3 font-medium text-gray-900">#{order.sub_order_no}</td>
                 <td className="p-3">{order.user?.name || "Guest"}<br></br>{order.user?.email || "N/A"}</td>
                 <td className="p-3 font-semibold">${Number(order.total_amount).toFixed(2)}</td>
                 <td className="p-3">
                   <span
                     className={`inline-block rounded-full px-2 py-0.5 text-xs font-semibold capitalize ${
-                      order.payment_status === "paid"
+                      order.master_order?.payment_status === "paid"
                         ? "bg-green-100 text-green-800"
                         : "bg-yellow-100 text-yellow-800"
                     }`}
                   >
-                    {order.payment_status}
+                    {order.master_order?.payment_status || order.payment_status}
                   </span>
                 </td>
                 <td className="p-3">
@@ -105,7 +110,7 @@ export default function SellerOrderList({ sellerId }: { sellerId: string }) {
                         ? "bg-blue-100 text-blue-800"
                         : order.order_status === "cancelled"
                         ? "bg-red-100 text-red-800"
-                        : "bg-gray-100 text-gray-800"
+                        : "bg-yellow-100 text-yellow-800"
                     }`}
                   >
                     {order.order_status}
